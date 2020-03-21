@@ -1,117 +1,73 @@
-package(default_visibility = ["//visibility:public"])
+load("@rules_cc//cc:defs.bzl", "cc_import", "cc_library")
 
-cc_library(
-    name = "qt_core",
-    hdrs = glob(["QtCore/**"]),
-    includes = ["."],
-    linkopts = [
-        "-lQt5Core",
-    ],
+cc_import(
+    name = "qt_core_private",
+    hdrs = glob(["include/QtCore/**"]),
+    interface_library = "lib/Qt5Core.lib",
+    shared_library = "bin/Qt5Core.dll",
 )
 
 cc_library(
-    name = "qt_network",
-    hdrs = glob(["QtNetwork/**"]),
-    includes = ["."],
-    linkopts = [
-        "-lQt5Network",
-    ],
+    name = "qt_core",
+    hdrs = glob(["include/QtCore/**"]),
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+    deps = [":qt_core_private"],
+)
+
+cc_import(
+    name = "qt_widgets_private",
+    hdrs = glob(["include/QtWidgets/**"]),
+    interface_library = "lib/Qt5Widgets.lib",
+    shared_library = "bin/Qt5Widgets.dll",
 )
 
 cc_library(
     name = "qt_widgets",
-    hdrs = glob(["QtWidgets/**"]),
-    includes = ["."],
-    linkopts = [
-        "-lQt5Widgets",
-    ],
-    deps = [":qt_core", ":qt_gui"],
+    hdrs = glob(["include/QtWidgets/**"]),
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+    deps = [":qt_widgets_private"],
 )
 
-cc_library(
-    name = "qt_quick",
-    hdrs = glob(["QtQuick/**"]),
-    includes = ["."],
-    linkopts = [
-        "-lQt5Quick",
-    ],
-    deps = [
-        ":qt_gui",
-        ":qt_qml",
-        ":qt_qml_models",
-    ],
-)
-
-cc_library(
-    name = "qt_qml",
-    hdrs = glob(["QtQml/**"]),
-    includes = ["."],
-    linkopts = [
-        "-lQt5Qml",
-    ],
-    deps = [
-        ":qt_core",
-        ":qt_network",
-    ],
-)
-
-cc_library(
-    name = "qt_qml_models",
-    linkopts = [
-        "-lQt5QmlModels",
-    ],
-    hdrs = glob(
-        ["QtQmlModels/**"],
-    ),
-    includes = ["."],
-)
-
-cc_library(
-    name = "qt_gui",
-    hdrs = glob(["QtGui/**"]),
-    includes = ["."],
-    linkopts = [
-        "-lQt5Gui",
-    ],
-    deps = [":qt_core"],
+cc_import(
+    name = "qt_opengl_private",
+    hdrs = glob(["include/QtOpenGL/**"]),
+    interface_library = "lib/Qt5OpenGL.lib",
+    shared_library = "bin/Qt5OpenGL.dll",
 )
 
 cc_library(
     name = "qt_opengl",
-    hdrs = glob(["QtOpenGL/**"]),
-    includes = ["."],
-    linkopts = ["-lQt5OpenGL"],
+    hdrs = glob(["include/QtOpenGL/**"]),
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+    deps = [":qt_opengl_private"],
+)
+
+cc_import(
+    name = "qt_gui_private",
+    hdrs = glob(["include/QtGui/**"]),
+    interface_library = "lib/Qt5Gui.lib",
+    shared_library = "bin/Qt5Gui.dll",
 )
 
 cc_library(
-    name = "qt_3d",
-    hdrs = glob([
-        "Qt3DAnimation/**",
-        "Qt3DCore/**",
-        "Qt3DExtras/**",
-        "Qt3DInput/**",
-        "Qt3DLogic/**",
-        "Qt3DQuick/**",
-        "Qt3DQuickAnimation/**",
-        "Qt3DQuickExtras/**",
-        "Qt3DQuickInput/**",
-        "Qt3DQuickRender/**",
-        "Qt3DQuickScene2D/**",
-        "Qt3DRender/**",
-    ]),
-    includes = ["."],
-    linkopts = [
-        "-lQt53DAnimation",
-        "-lQt53DCore",
-        "-lQt53DExtras",
-        "-lQt53DInput",
-        "-lQt53DLogic",
-        "-lQt53DQuick",
-        "-lQt53DQuickAnimation",
-        "-lQt53DQuickExtras",
-        "-lQt53DQuickInput",
-        "-lQt53DQuickRender",
-        "-lQt53DQuickScene2D",
-        "-lQt53DRender",
-    ],
+    name = "qt_gui",
+    hdrs = glob(["include/QtGui/**"]),
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+    deps = [":qt_gui_private"],
+)
+
+filegroup(
+    name = "uic",
+    srcs = ["bin/uic.exe"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "moc",
+    srcs = ["bin/moc.exe"],
+    visibility = ["//visibility:public"],
 )
