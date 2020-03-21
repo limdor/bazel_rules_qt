@@ -1,6 +1,6 @@
 Circle CI (Linux) | AppVeyor (Windows)
 :---: | :---:
-[![ci status](https://circleci.com/gh/justbuchanan/bazel_rules_qt.png?circle-token=9077bf6ecc5554e3ddbdc4d3947784460eb1df72)](https://app.circleci.com/pipelines/github/justbuchanan/bazel_rules_qt?branch=master) | [![ci status](https://ci.appveyor.com/api/projects/status/3klljux2otuk69u2/branch/master?svg=true)](https://ci.appveyor.com/project/justbuchanan/bazel-rules-qt/branch/master)
+[![ci status](https://circleci.com/gh/limdor/bazel_rules_qt.png)](https://app.circleci.com/pipelines/github/limdor/bazel_rules_qt?branch=master) | [![ci status](https://ci.appveyor.com/api/projects/status/8y13hl0xuw37hchl/branch/master?svg=true)](https://ci.appveyor.com/project/limdor/bazel-rules-qt/branch/master)
 
 # Bazel rules for Qt
 
@@ -27,17 +27,19 @@ Configure your WORKSPACE to include the qt libraries:
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 git_repository(
-    name = "com_justbuchanan_rules_qt",
+    name = "com_limdor_rules_qt",
     remote = "https://github.com/justbuchanan/bazel_rules_qt.git",
     branch = "master",
 )
 
 new_local_repository(
     name = "qt",
-    build_file = "@com_justbuchanan_rules_qt//:qt.BUILD",
-    path = "/usr/include/qt", # May need configuring for your installation
-    # For Qt5 on Ubuntu 16.04
-    # path = "/usr/include/x86_64-linux-gnu/qt5/"
+    build_file = "@com_limdor_rules_qt//:qt.BUILD",
+    # May need configuring for your installation
+    # For Qt5 on Ubuntu
+    path = "/usr/include/x86_64-linux-gnu/qt5/",
+    # For Qt 5.9.9 on Windows for Visual Studio 2015
+    # path = "C:\\Qt\\5.9.9\\msvc2015_64\\",
 )
 ```
 
@@ -46,7 +48,7 @@ Use the build rules provided by qt.bzl to build your project. See qt.bzl for whi
 ```python
 # BUILD
 
-load("@com_justbuchanan_rules_qt//:qt.bzl", "qt_cc_library", "qt_ui_library")
+load("@com_limdor_rules_qt//:qt.bzl", "qt_cc_library", "qt_ui_library")
 
 qt_cc_library(
     name = "MyWidget",
