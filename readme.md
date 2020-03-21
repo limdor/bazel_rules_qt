@@ -1,8 +1,8 @@
-# Bazel rules for Qt [![ci status](https://circleci.com/gh/justbuchanan/bazel_rules_qt.png?circle-token=9077bf6ecc5554e3ddbdc4d3947784460eb1df72)](https://app.circleci.com/pipelines/github/justbuchanan/bazel_rules_qt?branch=master)
+# Bazel rules for Qt [![ci status](https://circleci.com/gh/limdor/bazel_rules_qt.png)](https://app.circleci.com/pipelines/github/limdor/bazel_rules_qt?branch=master)
 
 These bazel rules and BUILD targets make it easy to use Qt from C++ projects built with bazel.
 
-Note that unlike many libraries used through bazel, qt is dynamically linked, meaning that the qt-dependent programs you build with bazel will use the qt libraries installed by the system package manager. Thus the users of your programs will also need to install qt.
+Note that unlike the original bazel_rules_qt, it is not needed to have Qt installed in the system to run your program. The needed dll files are copied to the output folder to make it self contained. However qt is still dynamically linked.
 
 ## Usage
 
@@ -17,7 +17,7 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 git_repository(
     name = "bazel_rules_qt",
-    remote = "https://github.com/justbuchanan/bazel_rules_qt.git",
+    remote = "https://github.com/limdor/bazel_rules_qt.git",
     branch = "master",
 )
 
@@ -62,4 +62,4 @@ cc_binary(
 
 ## Credits
 
-This is a fork of https://github.com/bbreslauer/qt-bazel-example with many modifications.
+This is a fork of https://github.com/justbuchanan/bazel_rules_qt with changes to make it work on Windows.
