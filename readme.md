@@ -28,7 +28,7 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 git_repository(
     name = "com_limdor_rules_qt",
-    remote = "https://github.com/justbuchanan/bazel_rules_qt.git",
+    remote = "https://github.com/limdor/bazel_rules_qt.git",
     branch = "master",
 )
 
@@ -77,4 +77,4 @@ cc_binary(
 
 ## Credits
 
-This is a fork of https://github.com/bbreslauer/qt-bazel-example with many modifications.
+This is a fork of https://github.com/justbuchanan/bazel_rules_qt with changes to make it work on Windows.
