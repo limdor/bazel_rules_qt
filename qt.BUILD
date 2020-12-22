@@ -14,7 +14,8 @@ QT_LIBRARIES = [
 [
     cc_library(
         name = "qt_%s_linux" % name,
-        hdrs = glob(["%s/**" % include_folder]),
+        # When being on Windows this glob will be empty
+        hdrs = glob(["%s/**" % include_folder], allow_empty=True),
         includes = ["."],
         linkopts = ["-l%s" % library_name],
         # Available from Bazel 4.0.0
@@ -26,7 +27,8 @@ QT_LIBRARIES = [
 [
     cc_import(
         name = "qt_%s_windows_import" % name,
-        hdrs = glob(["include/%s/**" % include_folder]),
+        # When being on Linux this glob will be empty
+        hdrs = glob(["include/%s/**" % include_folder], allow_empty=True),
         interface_library = "lib/%s.lib" % library_name,
         shared_library = "bin/%s.dll" % library_name,
         # Not available in cc_import (See: https://github.com/bazelbuild/bazel/issues/12745)
@@ -38,7 +40,8 @@ QT_LIBRARIES = [
 [
     cc_library(
         name = "qt_%s_windows" % name,
-        hdrs = glob(["include/%s/**" % include_folder]),
+        # When being on Linux this glob will be empty
+        hdrs = glob(["include/%s/**" % include_folder], allow_empty=True),
         includes = ["include"],
         # Available from Bazel 4.0.0
         # target_compatible_with = ["@platforms//os:windows"],
@@ -62,6 +65,7 @@ QT_LIBRARIES = [
 # TODO: Make available also for Windows
 cc_library(
     name = "qt_3d",
+    # When being on Windows this glob will be empty
     hdrs = glob([
         "Qt3DAnimation/**",
         "Qt3DCore/**",
@@ -75,7 +79,7 @@ cc_library(
         "Qt3DQuickRender/**",
         "Qt3DQuickScene2D/**",
         "Qt3DRender/**",
-    ]),
+    ], allow_empty=True),
     includes = ["."],
     linkopts = [
         "-lQt53DAnimation",
