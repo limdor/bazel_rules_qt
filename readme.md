@@ -1,12 +1,15 @@
-# Bazel rules for Qt [![ci status](https://circleci.com/gh/justbuchanan/bazel_rules_qt.png?circle-token=9077bf6ecc5554e3ddbdc4d3947784460eb1df72)](https://app.circleci.com/pipelines/github/justbuchanan/bazel_rules_qt?branch=master)
+# Bazel rules for Qt [![ci status](https://circleci.com/gh/limdor/bazel_rules_qt.png)](https://app.circleci.com/pipelines/github/limdor/bazel_rules_qt?branch=master)
 
 These bazel rules and BUILD targets make it easy to use Qt from C++ projects built with bazel.
 
-Note that unlike many libraries used through bazel, qt is dynamically linked, meaning that the qt-dependent programs you build with bazel will use the qt libraries installed by the system package manager. Thus the users of your programs will also need to install qt.
+Note that unlike many libraries used through bazel, it requires Qt to be installed when building the application.
+Also keep in mind that this rules only allow to link Qt dynamically.
+In addition in the case of Linux it also requires Qt to be installed on the system when running it.
+For Windows, it is not needed to have Qt installed in the system to run your program. The needed dll files are copied to the output folder to make it self contained. However qt is still dynamically linked.
 
 ## Platform support
 
-This project currently only works on Linux, although eventually I'd like it to support Windows and Mac OS X as well.
+This project currently only works on Linux and Windows, eventually Mac OS X might be supported as well.
 
 ## Usage
 
@@ -20,17 +23,19 @@ Configure your WORKSPACE to include the qt libraries:
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 git_repository(
-    name = "com_justbuchanan_rules_qt",
-    remote = "https://github.com/justbuchanan/bazel_rules_qt.git",
+    name = "com_limdor_rules_qt",
+    remote = "https://github.com/limdor/bazel_rules_qt.git",
     branch = "master",
 )
 
 new_local_repository(
     name = "qt",
-    build_file = "@com_justbuchanan_rules_qt//:qt.BUILD",
-    path = "/usr/include/qt", # May need configuring for your installation
-    # For Qt5 on Ubuntu 16.04
-    # path = "/usr/include/x86_64-linux-gnu/qt5/"
+    build_file = "@com_limdor_rules_qt//:qt.BUILD",
+    # May need configuring for your installation
+    # For Qt5 on Ubuntu
+    path = "/usr/include/x86_64-linux-gnu/qt5/",
+    # For Qt 5.9.9 on Windows for Visual Studio 2015
+    # path = "C:\\Qt\\5.9.9\\msvc2015_64\\",
 )
 ```
 
@@ -39,7 +44,7 @@ Use the build rules provided by qt.bzl to build your project. See qt.bzl for whi
 ```python
 # BUILD
 
-load("@com_justbuchanan_rules_qt//:qt.bzl", "qt_cc_library", "qt_ui_library")
+load("@com_limdor_rules_qt//:qt.bzl", "qt_cc_library", "qt_ui_library")
 
 qt_cc_library(
     name = "MyWidget",
@@ -68,4 +73,4 @@ cc_binary(
 
 ## Credits
 
-This is a fork of https://github.com/bbreslauer/qt-bazel-example with many modifications.
+This is a fork of https://github.com/justbuchanan/bazel_rules_qt with changes to make it work on Windows.
