@@ -1,9 +1,13 @@
 workspace(name = "com_limdor_rules_qt")
 
+load("@com_limdor_rules_qt//:qt_configure.bzl", "qt_configure")
+
+qt_configure()
+
+load("@local_config_qt//:local_qt.bzl", "local_qt_path")
+
 new_local_repository(
     name = "qt",
     build_file = "@com_limdor_rules_qt//:qt.BUILD",
-    # path = "/usr/include/qt",  # arch linux
-    path = "/usr/include/x86_64-linux-gnu/qt5",  # debian
-    # path = "C:\\Qt\\5.9.9\\msvc2015_64\\", # windows
+    path = local_qt_path(),
 )
