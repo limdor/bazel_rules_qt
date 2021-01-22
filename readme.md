@@ -1,4 +1,8 @@
-# Bazel rules for Qt [![ci status](https://circleci.com/gh/limdor/bazel_rules_qt.png)](https://app.circleci.com/pipelines/github/limdor/bazel_rules_qt?branch=master)
+Circle CI | Bazel CI
+:---: | :---:
+[![Build Status](https://circleci.com/gh/limdor/bazel_rules_qt.png)](https://app.circleci.com/pipelines/github/limdor/bazel_rules_qt?branch=master) | [![Build status](https://badge.buildkite.com/a1033836f9522e389316105837b79c67e5a749c23ba62cdc20.svg)](https://buildkite.com/bazel/rules-qt)
+
+# Bazel rules for Qt
 
 These bazel rules and BUILD targets make it easy to use Qt from C++ projects built with bazel.
 
