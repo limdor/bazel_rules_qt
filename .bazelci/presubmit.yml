@@ -1,5 +1,10 @@
 ---
 tasks:
   ubuntu1804:
+    shell_commands:
+      - pip3 install aqtinstall
+      - python3 -m aqt install --outputdir $HOME/Qt 5.12.10 linux desktop
+    environment:
+      QT_DIR: $HOME/Qt/5.12.10/gcc_64
     build_targets:
       - "//..."
